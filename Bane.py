@@ -10,7 +10,7 @@ g = -9.81 # Tyngdekraftens akselerasjon
 delta_t = 0.001 # Tidsoppløsning
 tid_slutt = 100 # maks simulering tid
 t = 0 # Start-tid for simulering
-alpha = m.pi*(vinkel/180) # konverterer vinkel til grader til radianer (for å bruke trig i math)
+alpha = m.pi*(vinkel/180) # konverterer vinkel fra grader til radianer (for å bruke trig i math)
 r = 0.02 # Luftmotstandskoeffisient (eksperimentell)
 flytid = [] # åpen liste for lagring av siste t-verdi via .append
 
