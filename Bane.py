@@ -1,21 +1,24 @@
 import matplotlib.pyplot as plt
 import math as m
 
-g = -9.81
-delta_t = 0.001
-tid_slutt = 100
-t = 0
-starthøyde = int(input("starthøyde: "))
-vinkel = int(input("utskytnings-vinkel (deg): "))
-alpha = m.pi*(vinkel/180)
-startfart = int(input("utskytnings-fart (m/s): "))
-r = 0.02
-flytid = []
+#Planet = str(input("Velg hvilken planet simuleringen gjelder for: Jorda/Månen"))
+starthøyde = int(input("Starthøyde (m):               "))
+vinkel = int(input("Utskytnings-vinkel (deg):     "))
+startfart = float(input("Utskytnings-fart (m/s):       "))
+
+g = -9.81 # Tyngdekraftens akselerasjon
+delta_t = 0.001 # Tidsoppløsning
+tid_slutt = 100 # maks simulering tid
+t = 0 # Start-tid for simulering
+alpha = m.pi*(vinkel/180) # konverterer vinkel til grader til radianer (for å bruke trig i math)
+r = 0.02 # Luftmotstandskoeffisient (eksperimentell)
+flytid = [] # åpen liste for lagring av siste t-verdi via .append
 
     
-x = []
-y = []
+x = [] # Liste for x-posisjoner i simuleringen 
+y = [] # Liste for y-posisjoner i simuleringen
 
+# Posisjonsberegnings funksjon
 def bane(t):
     while t <= tid_slutt:
         xv = m.cos(alpha)*startfart**(1-r*t)
@@ -29,18 +32,29 @@ def bane(t):
             flytid.append(t)
             break
     return t
-bane(t)
-y_end = y[-2]-y[-1]
+
+# Starter banefunksjonen (simuleringen)
+bane(t) 
+
+# Beregning av nedslagsvinkel
+y_end = y[-2]-y[-1] 
 x_end = x[-2]-x[-1]
-print("vinkel ved nedslag = ", m.atan(y_end/x_end)*(180/m.pi))
-print("Banens maxima: ", max(y)," meter")
-print("Lengde = ", max(x), "meter")
-print("Tid i luften: ", flytid, " sekunder")
 
+# Beregning av farten i y-retning
+slutthastighet_y = (y[-1]-y[-10])/(9*delta_t)
 
-#mpl.axis(xlim=(0, 1000), ylim=(0, 1000))
+# Printer resultat
+print(" ")
+print("--------------------- RESULTATER ---------------------")
+print("Vinkel ved nedslag:          ", m.atan(y_end/x_end)*(180/m.pi))
+print("Høyde:                       ", max(y),"meter")
+print("Lengde:                      ", max(x), "meter")
+print("Tid i luften:                ", flytid, "sekunder")
+print("Slutthastighet y:            ", -slutthastighet_y, " m/s")
+print("------------------------------------------------------")
+
+# Plotter banen
 plt.plot(x, y)
-plt.xlim(0)
-#plt.ylim(0,20)
+plt.axis(xmin=0, ymin=0)
 plt.axis('equal')
 plt.show()
