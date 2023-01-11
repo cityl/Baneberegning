@@ -5,12 +5,12 @@ g = -9.81
 delta_t = 0.001
 tid_slutt = 100
 t = 0
-starthøyde = 0
+starthøyde = int(input("starthøyde: "))
 vinkel = int(input("utskytnings-vinkel (deg): "))
 alpha = m.pi*(vinkel/180)
 startfart = int(input("utskytnings-fart (m/s): "))
 r = 0.02
-
+flytid = []
 
     
 x = []
@@ -26,6 +26,7 @@ def bane(t):
         y.append(y_n)
         t = t+delta_t
         if y_n < 0:
+            flytid.append(t)
             break
     return t
 bane(t)
@@ -34,6 +35,8 @@ x_end = x[-2]-x[-1]
 print("vinkel ved nedslag = ", m.atan(y_end/x_end)*(180/m.pi))
 print("Banens maxima: ", max(y)," meter")
 print("Lengde = ", max(x), "meter")
+print("Tid i luften: ", flytid, " sekunder")
+
 
 #mpl.axis(xlim=(0, 1000), ylim=(0, 1000))
 plt.plot(x, y)
